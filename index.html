@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GMIU Student Portal - Smit Vaghasiya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #818cf8;
+      --secondary: #c084fc;
+      --bg-dark: #0b0f19;
+      --surface: rgba(17, 24, 39, 0.7);
+      --surface-hover: rgba(31, 41, 55, 0.85);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --glow: rgba(129, 140, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Core Single-Screen Layout */
+    html, body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* Strict no scrolling */
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(200, 75, 245, 0.15) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2vh;
+      color: var(--text-main);
+    }
+
+    /* Floating glowing orbs for dynamic ambiance */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      width: 45vw;
+      height: 45vw;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      animation: floatOrbs 12s infinite alternate ease-in-out;
+    }
+    body::before {
+      top: -10%; left: -10%;
+      background: rgba(99, 102, 241, 0.15);
+    }
+    body::after {
+      bottom: -10%; right: -10%;
+      background: rgba(236, 72, 153, 0.15);
+      animation-duration: 15s;
+      animation-direction: alternate-reverse;
+    }
+
+    @keyframes floatOrbs {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, 40px) scale(1.1); }
+    }
+
+    .container {
+      width: 95%;
+      max-width: 950px;
+      height: auto;
+      max-height: 95vh;
+      background: var(--surface);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 32px;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      padding: clamp(2rem, 5vh, 3.5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      gap: 2vh;
+      animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes slideUpFade {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Styling */
+    .header {
+      width: 100%;
+      text-align: center;
+      animation: scaleIn 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .logo-wrapper {
+      background: rgba(255, 255, 255, 0.95);
+      display: inline-flex;
+      padding: 0.8vh 1.5rem;
+      border-radius: 16px;
+      margin-bottom: 1.5vh;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      animation: pulseLogo 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseLogo {
+      0% { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
+      100% { box-shadow: 0 4px 25px rgba(255, 255, 255, 0.15); }
+    }
+
+    .logo {
+      height: clamp(30px, 4.5vh, 45px);
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vh, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 0.8vh;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .badge {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.8vh 1.5rem;
+      border-radius: 999px;
+      font-size: clamp(0.75rem, 1.6vh, 0.95rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 15px rgba(192, 132, 252, 0.4);
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .badge:hover {
+      transform: scale(1.05);
+    }
+
+    /* Info Grid Styling */
+    .info-grid {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5vh 1.5rem;
+    }
+
+    .info-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: clamp(1rem, 2vh, 1.5rem);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      animation: popup 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .info-card:nth-child(1) { animation-delay: 0.3s; }
+    .info-card:nth-child(2) { animation-delay: 0.4s; }
+    .info-card:nth-child(3) { animation-delay: 0.5s; }
+    .info-card:nth-child(4) { animation-delay: 0.6s; }
+
+    @keyframes popup {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    .info-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-card:hover::before {
+      opacity: 1;
+    }
+
+    .info-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .icon-box {
+      width: clamp(36px, 4.5vh, 48px);
+      height: clamp(36px, 4.5vh, 48px);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2vh;
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease;
+    }
+
+    .info-card:hover .icon-box {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .icon-box svg {
+      width: 50%;
+      height: 50%;
+    }
+
+    .info-label {
+      font-size: clamp(0.65rem, 1.2vh, 0.75rem);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      margin-bottom: 0.4vh;
+    }
+
+    .info-value {
+      font-size: clamp(1rem, 2vh, 1.3rem);
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Buttons Row */
+    .action-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      animation: slideUpFade 0.8s 0.7s both;
+    }
+
+    .btn {
+      flex: 1;
+      padding: clamp(0.8rem, 2vh, 1.25rem);
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2vh, 1.1rem);
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #ffffff;
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(192, 132, 252, 0.3);
+      border-color: transparent;
+    }
+
+    .btn:hover::after {
+      left: 200%;
+    }
+
+    .footer {
+      width: 100%;
+      padding-top: 1.5vh;
+      border-top: 1px solid var(--border);
+      font-size: clamp(0.75rem, 1.3vh, 0.85rem);
+      color: var(--text-muted);
+      font-weight: 500;
+      text-align: center;
+      animation: slideUpFade 0.8s 0.8s both;
+    }
+
+    .footer strong {
+      color: var(--primary);
+    }
+
+    /* Scaling for smaller screens without scroll */
+    @media (max-width: 600px) {
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1vh 0.75rem;
+      }
+      .action-buttons {
+        gap: 0.5rem;
+      }
+      .btn {
+        padding: 0.8rem 0.2rem;
+        font-size: 0.75rem;
+      }
+      .container {
+        padding: 1.5rem;
+        border-radius: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header class="header">
+      <div class="logo-wrapper">
+        <img src="gmiu.png" alt="University Logo" class="logo">
+      </div>
+      <h1>Gyanmanjari Innovative University</h1>
+      <div><span class="badge">Active Learning Activities</span></div>
+    </header>
+
+    <div class="info-grid">
+      <!-- Student Name -->
+      <div class="info-card">
+        <div class="icon-box" style="color: #10b981; background: rgba(16, 185, 129, 0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </div>
+        <div class="info-label">Student Name</div>
+        <div class="info-value">VAGHASIYA SMIT</div>
+      </div>
+
+      <!-- Enrollment -->
+      <div class="info-card">
+        <div class="icon-box" style="color: #f59e0b; background: rgba(245, 158, 11, 0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+          </svg>
+        </div>
+        <div class="info-label">Enrollment Number</div>
+        <div class="info-value">20230905090026</div>
+      </div>
+
+      <!-- Subject -->
+      <div class="info-card">
+        <div class="icon-box" style="color: #3b82f6; background: rgba(59, 130, 246, 0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div class="info-label">Subject Name</div>
+        <div class="info-value" style="font-size: clamp(0.7rem, 1.4vh, 0.95rem);">CRYPTOGRAPHY AND NETWORK SECURITY</div>
+      </div>
+
+      <!-- Course Code -->
+      <div class="info-card">
+        <div class="icon-box" style="color: #ec4899; background: rgba(236, 72, 153, 0.1);">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+        </div>
+        <div class="info-label">Subject Code</div>
+        <div class="info-value">BETIT16326</div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="ala1.html" class="btn">ALA-1</a>
+      <a href="ala2.html" class="btn">ALA-2</a>
+      <a href="ala3.html" class="btn">ALA-3</a>
+    </div>
+
+    <div class="footer">
+      Designed by <strong>Smit Vaghasiya</strong>
+    </div>
+  </div>
+
+</body>
+</html>
